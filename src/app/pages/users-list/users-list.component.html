@@ -1,0 +1,88 @@
+<div class="users">
+  <!-- Topbar -->
+  <div class="topbar">
+    <img src="/assets/conexus-logo.png" alt="Conexus Logo" class="logo-left" />
+
+    <div class="actions">
+      <button mat-raised-button color="primary" routerLink="/dashboard">
+        <mat-icon>arrow_back</mat-icon>
+        Volver al Dashboard
+      </button>
+      <button mat-raised-button color="accent" routerLink="/admin/users/new">
+  <mat-icon>person_add</mat-icon>
+  Nuevo Usuario
+</button>
+
+    </div>
+  </div>
+
+  <!-- Logo SIGIC abajo a la derecha -->
+  <!-- <img src="/assets/sigic-logo.png" alt="SIGIC Logo" class="logo-right" /> -->
+
+  <!-- Watermark central -->
+  <div class="watermark"></div>
+  <div class="content">
+    <!-- Contenido principal -->
+    <div class="users-container mat-elevation-z4">
+      <h2>Gestión de Usuarios</h2>
+
+      <table mat-table [dataSource]="(users$ | async) || []" class="mat-elevation-z8">
+
+        <!-- columnas como ya las tienes -->
+        <ng-container matColumnDef="cod_usuario">
+          <th mat-header-cell *matHeaderCellDef>Usuario</th>
+          <td mat-cell *matCellDef="let u">{{ u.cod_usuario }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nomb_usuario">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let u">{{ u.nomb_usuario }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="banco">
+          <th mat-header-cell *matHeaderCellDef>Banco</th>
+          <td mat-cell *matCellDef="let u">{{ u.banco }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="estatus">
+          <th mat-header-cell *matHeaderCellDef>Estatus</th>
+          <td mat-cell *matCellDef="let u">
+            <span
+              [ngClass]="{
+                'status-active': u.estatus === 'A',
+                'status-inactive': u.estatus === 'I',
+                'status-deleted': u.estatus === 'E'
+              }"
+            >
+              {{ u.estatus }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="perfiles">
+          <th mat-header-cell *matHeaderCellDef>Perfiles</th>
+          <td mat-cell *matCellDef="let u">{{ u.perfiles.join(", ") }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let u">
+            <button mat-icon-button color="primary" (click)="edit(u)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(u)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" (click)="openChangePassword(u)">
+  <mat-icon>lock_reset</mat-icon>
+</button>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+</div>

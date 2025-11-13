@@ -1,0 +1,65 @@
+<div class="user-form-page">
+  <!-- Topbar -->
+  <div class="topbar">
+    <img src="/assets/conexus-logo.png" alt="Conexus Logo" class="logo-left" />
+
+    <div class="actions">
+      <button mat-raised-button color="primary" routerLink="/admin/users">
+        <mat-icon>arrow_back</mat-icon>
+        Volver a Usuarios
+      </button>
+    </div>
+  </div>
+
+  <!-- Watermark central -->
+  <div class="watermark"></div>
+
+  <!-- Contenido principal centrado -->
+  <div class="content">
+    <div class="user-form mat-elevation-z4">
+      <h2>{{ isEdit ? 'Editar Usuario' : 'Nuevo Usuario' }}</h2>
+
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Usuario</mat-label>
+          <input matInput formControlName="cod_usuario" [readonly]="isEdit" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nomb_usuario" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Banco</mat-label>
+          <mat-select formControlName="banco">
+            <mat-option *ngFor="let b of bancos" [value]="b.code">{{ b.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Estatus</mat-label>
+          <mat-select formControlName="estatus">
+            <mat-option value="A">Activo</mat-option>
+            <mat-option value="I">Inactivo</mat-option>
+            <mat-option value="E">Eliminado</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Perfiles</mat-label>
+          <mat-select formControlName="perfiles" multiple>
+            <mat-option *ngFor="let p of perfiles" [value]="p.code">{{ p.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+            Guardar
+          </button>
+         
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
