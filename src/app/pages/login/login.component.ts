@@ -6,6 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +18,8 @@ import { AuthService } from '../../services/auth.service';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIcon
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -26,6 +30,8 @@ export class LoginComponent {
   loading = false;
   showSuccess = false;
   loginError = '';
+  activeTab: string = 'que-es';
+
 
   constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
     this.form = this.fb.group({
@@ -36,6 +42,19 @@ export class LoginComponent {
   // Log only the current values to avoid dumping the full FormGroup internals to the terminal
   console.log('[LoginComponent] constructor: form initialized, value=', this.form.value);
   }
+  @ViewChild('tabsWrapper') tabsWrapper!: ElementRef;
+
+scrollTabs(direction: 'left' | 'right') {
+  const wrapper = this.tabsWrapper.nativeElement;
+  const scrollAmount = 150;
+
+  if (direction === 'left') {
+    wrapper.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  } else {
+    wrapper.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
+}
+
 
   onSubmit() {
     console.log('[LoginComponent] onSubmit called');
