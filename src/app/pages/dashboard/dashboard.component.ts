@@ -28,7 +28,7 @@ export class DashboardComponent {
     { code: 3, name: 'Visión Operativa', color: 'accent', url: 'https://powerbi.com/operativa', icon: 'work' },
     { code: 6, name: 'Visión Financiera', color: 'warn', url: 'https://powerbi.com/financiera', icon: 'account_balance' },
     { code: 7, name: 'Alertas Tempranas', color: 'warn', url: 'https://powerbi.com/alertas', icon: 'notification_important' },
-    { code: 8, name: 'Reportes Ad Hoc', color: 'primary', url: 'https://app.powerbi.com/groups/f3a16ca3-693e-49f5-b1c4-fca383c39d48/reports/965eb058-3364-44fe-80ec-29d2d66f2dae/fa507c822f01aa20002e?experience=power-bi', icon: 'bar_chart' },
+    { code: 8, name: 'Reportes Ad Hoc', color: 'primary', url: 'https://app.powerbi.com/links/RqQn5B6v0u?ctid=9c396733-d21f-4657-b0f7-59e01c06818a&pbi_source=linkShare&bookmarkGuid=01a89ea2-ee3a-4297-af7f-5fb19bd64765', icon: 'bar_chart' },
     { code: 9, name: 'Gestión de Usuarios', color: 'primary', url: 'admin/users', icon: 'manage_accounts', adminOnly: true }
 
   ];

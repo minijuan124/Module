@@ -101,23 +101,7 @@
         <p>{{ loginError }}</p>
       </div>
 
-      <div class="gentle-success" id="successMessage" [class.show]="showSuccess">
-        <div class="success-bloom">
-          <div class="bloom-rings">
-            <div class="bloom-ring ring-1"></div>
-            <div class="bloom-ring ring-2"></div>
-            <div class="bloom-ring ring-3"></div>
-          </div>
-          <div class="success-icon">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <path d="M8 14l5 5 11-11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-          </div>
-        </div>
-        <h3 class="success-title">Welcome!</h3>
-        <p class="success-desc">Taking you to your dashboard...</p>
-      </div>
+      <!-- success overlay removed to avoid layout/animation on login -->
     </div>
   </div>
 
@@ -125,28 +109,22 @@
     <!-- Replaced image with a scrollable info container. Put any informational text inside .info-box -->
     <div class="info-panel">
       <div class="info-box" tabindex="0">
-        <h1 class="info-title">BIENVENIDO</h1>
-        <h2 class="info-subtitle">
-          SOLUCIÓN INTEGRAL PARA LA<br />
-          GESTIÓN DE INFORMACIÓN EN<br />
-          PROYECTOS CONEXUS<br />
-          <strong>SIGIC</strong>
-        </h2>
-
+        
         <!-- Contenedor scrollable solo para los botones -->
 <div class="info-tabs-container">
  <button class="scroll-arrow left" (click)="scrollTabs('left')">
     <mat-icon>chevron_left</mat-icon>
   </button>
 
-  <div class="info-tabs-wrapper" #tabsWrapper>
+      <div class="info-tabs-wrapper" #tabsWrapper>
     <nav class="info-tabs">
-      <button [class.active]="activeTab === 'que-es'" (click)="activeTab = 'que-es'">¿Qué es SIGIC?</button>
-      <button [class.active]="activeTab === 'gerencial'" (click)="activeTab = 'gerencial'">Visión Gerencial</button>
-      <button [class.active]="activeTab === 'operativa'" (click)="activeTab = 'operativa'">Visión Operativa</button>
-      <button [class.active]="activeTab === 'financiera'" (click)="activeTab = 'financiera'">Visión Financiera / Administrativa</button>
-      <button [class.active]="activeTab === 'alertas'" (click)="activeTab = 'alertas'">Alertas Tempranas</button>
-      <button [class.active]="activeTab === 'adhoc'" (click)="activeTab = 'adhoc'">Reportes AD HOC</button>
+      <button [class.active]="activeTab === 'all'" (click)="selectTab('all',$event)">Todo</button>
+      <button [class.active]="activeTab === 'que-es'" (click)="selectTab('que-es',$event)">¿Qué es SIGIC?</button>
+      <button [class.active]="activeTab === 'gerencial'" (click)="selectTab('gerencial',$event)">Visión Gerencial</button>
+      <button [class.active]="activeTab === 'operativa'" (click)="selectTab('operativa',$event)">Visión Operativa</button>
+      <button [class.active]="activeTab === 'financiera'" (click)="selectTab('financiera',$event)">Visión Financiera / Administrativa</button>
+      <button [class.active]="activeTab === 'alertas'" (click)="selectTab('alertas',$event)">Alertas Tempranas</button>
+      <button [class.active]="activeTab === 'adhoc'" (click)="selectTab('adhoc',$event)">Reportes AD HOC</button>
     </nav>
   </div>
 
@@ -158,257 +136,12 @@
 
 
         <!-- Tab content -->
-        <div class="tab-content">
-          <section *ngIf="activeTab === 'que-es'" class="info-section">
-            <p>
-              La
-              <strong>Solución Integral para la Gestión de Información en Proyectos
-                Conexus (SIGIC)</strong>
-              tiene como objetivo general fomentar una cultura empresarial
-              basada en el <strong>análisis de datos</strong>,
-              <strong>minería de datos</strong> y un robusto sistema de
-              <strong>alertas tempranas</strong>. Esto permite optimizar los
-              procesos para la toma de decisiones y maximizar tanto la
-              eficiencia como la accesibilidad a la información.
-            </p>
-            <p>
-              La columna vertebral de esta solución es un
-              <strong>Datamart Centralizado</strong>, que consolida información
-              histórica y actual de todas las
-              <strong>Operaciones y Servicios</strong> de Proyectos Conexus. A
-              través de un <strong>Dashboard Multidimensional</strong> diseñado
-              en Power BI, SIGIC ofrece cinco visiones estratégicas adaptadas a
-              los distintos roles dentro de la organización.
-            </p>
-            <p>
-              Cada visión proporciona una perspectiva única, transformando datos
-              complejos en información comprensible y accionable.
-            </p>
-            <h3>🔍 Visiones Estratégicas</h3>
-            <ul>
-              <li><strong>Visión Gerencial</strong></li>
-              <li><strong>Visión Operativa</strong></li>
-              <li><strong>Reportes AD HOC</strong></li>
-              <li><strong>Alertas Tempranas</strong></li>
-              <li><strong>Visión Financiera / Administrativa</strong></li>
-            </ul>
-          </section>
+       <div class="tab-content">
+  <div class="pdf-image-gallery">
+    <img *ngFor="let page of filteredPages" [src]="page.url"  />
+  </div>
+</div>
 
-          <section *ngIf="activeTab === 'gerencial'" class="info-section">
-            <h3>PERSPECTIVA ESTRATÉGICA</h3>
-            <p>
-              La <strong>Visión Gerencial</strong> es el tablero de mando para
-              la Alta Gerencia, proporcionando una comprensión rápida del estado
-              general de las operaciones y servicios en Proyectos Conexus.
-            </p>
-            <p>
-              Esto ofrecerá una vista panorámica del negocio, permitiendo a los
-              líderes evaluar rápidamente la salud de la empresa y tomar
-              decisiones estratégicas de alto nivel con confianza.
-            </p>
-
-            <h3>📊 Reportes y Gráficos</h3>
-            <p>
-              Los reportes y gráficos asociados a esta visión serán cuadros
-              resúmenes con filtros por periodos (año/mes/día) y/o por
-              Institución Financiera o Servicio, con sus respectivos
-              comparativos.
-            </p>
-            <ul>
-              <li>
-                Total de transacciones por tipo de servicio:
-                <strong>ATM / OUTSOURCING / P2P / P2C / C2P</strong>
-              </li>
-              <li>
-                Cantidad de transacciones realizadas por Bancos Conexus en las
-                Redes <strong>Conexus / SW7B</strong> por códigos de respuesta
-              </li>
-              <li>
-                Monto total por tipo de servicio:
-                <strong>ATM / OUTSOURCING / P2P / P2C / C2P</strong>
-              </li>
-              <li>
-                Total de transacciones y montos por Banco Conexus (Emisor /
-                Adquiriente) en la <strong>Red Conexus</strong>
-              </li>
-              <li>
-                Total de transacciones y montos por Banco Conexus (Emisor /
-                Adquiriente) en la <strong>Red SW7B</strong>
-              </li>
-              <li>
-                Total de transacciones aprobadas, negadas y reversadas por Banco
-                Conexus (Emisor / Adquiriente) en
-                <strong>Conexus / SW7B</strong>
-              </li>
-              <li>
-                Total de transacciones y montos por tipo de servicio de cada
-                Banco Conexus (Emisor / Adquiriente)
-              </li>
-              <li>Resumen ejecutivo de capitales por Institución Financiera</li>
-              <li>
-                Módulo de <strong>Reportes 360</strong> con indicadores
-                <strong>Tecnológicos / Operativos / Financieros</strong>
-              </li>
-            </ul>
-          </section>
-          <section *ngIf="activeTab === 'operativa'" class="info-section">
-            <h3>SUPERVISIÓN Y MONITOREO</h3>
-            <p>
-              La <strong>Visión Operativa</strong> proporciona un seguimiento
-              exhaustivo de tareas y recursos. Es una herramienta esencial para
-              la gestión diaria de las operaciones y servicios de Proyectos
-              Conexus, permitiendo a los gerentes y supervisores monitorear el
-              progreso, identificar cuellos de botella y asignar recursos de
-              manera eficiente.
-            </p>
-            <p>
-              Esta visión asegura que cada tarea se alinee con los objetivos de
-              la empresa y se complete a tiempo.
-            </p>
-
-            <h3>📊 Reportes y Gráficos</h3>
-            <p>
-              Los reportes y gráficos asociados a esta visión incluyen cuadros
-              resúmenes y de detalle, con filtros por periodos (año/mes/día),
-              Institución Financiera y/o Servicio, con sus respectivos
-              comparativos.
-            </p>
-            <ul>
-              <li>
-                Total de transacciones por tipo de servicio:
-                <strong>ATM / OUTSOURCING / P2P / P2C / C2P</strong>
-              </li>
-              <li>Estadísticas por tipo de servicio vs código de respuesta</li>
-              <li>
-                Comparativos mensuales del total de transacciones y montos por
-                Institución Financiera
-              </li>
-              <li>
-                Consulta detallada de las transacciones de un cliente en
-                particular vs Institución Financiera
-              </li>
-              <li>
-                Total de transacciones y montos por rango de monto del emisor
-              </li>
-              <li>Estadísticas de transacciones conciliadas y sin conciliar</li>
-              <li>
-                Resumen de transacciones autorizadas y dispensadas como emisor y
-                adquiriente
-              </li>
-              <li>Estadísticas de tiempo fuera de servicio</li>
-            </ul>
-          </section>
-          <section *ngIf="activeTab === 'financiera'" class="info-section">
-            <h3>CONTROL RIGUROSO</h3>
-            <p>
-              La <strong>Visión Financiera / Administrativa</strong> está
-              diseñada para ofrecer un control riguroso de presupuestos y
-              costos. Permite a los departamentos financieros y administrativos
-              monitorear en tiempo real los <strong>gastos</strong>,
-              <strong>ingresos</strong> y la
-              <strong>salud financiera general</strong> de la empresa.
-            </p>
-            <p>
-              Con esta visión, es posible identificar
-              <strong>desviaciones presupuestarias</strong>,
-              <strong>optimizar gastos</strong> y
-              <strong>asegurar la rentabilidad a largo plazo</strong>.
-            </p>
-
-            <h3>📈 Beneficios destacados</h3>
-            <ul>
-              <li>
-                <strong>Ingresos Trimestrales:</strong> Crecimiento constante
-              </li>
-              <li><strong>Costos Operativos:</strong> Eficiencia mejorada</li>
-              <li><strong>Margen Neto:</strong> Rentabilidad saludable</li>
-              <li>
-                <strong>Cumplimiento Presupuestario:</strong> Control físico
-                estricto
-              </li>
-            </ul>
-          </section>
-          <section *ngIf="activeTab === 'alertas'" class="info-section">
-            <h3>ALERTAS TEMPRANAS</h3>
-            <p>
-              Las <strong>Alertas Tempranas</strong> son una herramienta
-              predictiva vital, destacando indicadores claves que puedan
-              resaltar problemas futuros o nuevas oportunidades.
-            </p>
-
-            <h4>🔍 Detección de anomalías</h4>
-            <ul>
-              <li>Monitoreo continuo de indicadores</li>
-              <li>
-                Alertas sobre cualquier desviación significativa respecto a los
-                objetivos establecidos
-              </li>
-            </ul>
-
-            <h4>📈 Análisis Predictivo</h4>
-            <ul>
-              <li>Implementar acciones correctivas</li>
-              <li>
-                Minimizar riesgos para evitar posibles interrupciones o
-                sobrecostos
-              </li>
-              <li>Históricos de eventos recurrentes</li>
-            </ul>
-
-            <h4>📣 Generación de avisos</h4>
-            <ul>
-              <li>
-                Las alertas se configurarán para ser enviadas a los responsables
-                pertinentes
-              </li>
-              <li>
-                Garantizan que la información crítica llegue a las personas
-                adecuadas en el momento oportuno
-              </li>
-              <li>Se entregan vía email o notificaciones push</li>
-            </ul>
-
-            <h4>⚙️ Optimización de flujo</h4>
-            <ul>
-              <li>
-                Identificación de cuellos de botella o ineficiencias en los
-                procesos
-              </li>
-              <li>Contribuyen a optimizar los flujos de trabajo</li>
-              <li>Mejoran la productividad general de los equipos</li>
-            </ul>
-          </section>
-          <section *ngIf="activeTab === 'adhoc'" class="info-section">
-            <h3>REPORTES AD HOC</h3>
-            <p>
-              Los <strong>Reportes AD HOC</strong> aseguran que en Proyectos Conexus no solo se tenga acceso a
-              información estructurada, sino que también se tenga la flexibilidad para responder a preguntas únicas y
-              dinámicas del negocio, adaptándose continuamente a los desafíos del mercado.
-            </p>
-            <p>
-              Esto cierra el ciclo de valor, consolidando la información como un activo estratégico fundamental.
-            </p>
-
-            <h4>🎯 Personalización Total</h4>
-            <p>
-              Los usuarios podrán generar informes personalizados arrastrando y soltando campos, filtros y
-              visualizaciones, adaptándose a necesidades específicas no cubiertas por los dashboards estándar.
-            </p>
-
-            <h4>🔍 Análisis Exploratorio</h4>
-            <p>
-              Esta funcionalidad fomentará la exploración de datos, permitiendo a los equipos descubrir nuevas
-              relaciones, tendencias y oportunidades que impulsarán la innovación.
-            </p>
-
-            <h4>⚡ Agilidad en la Toma de Decisiones</h4>
-            <p>
-              Los equipos podrán responder rápidamente a preguntas específicas del negocio, acelerando el proceso de
-              toma de decisiones y fortaleciendo la capacidad de adaptación.
-            </p>
-          </section>
-
-        </div>
       </div>
     </div>
   </div>

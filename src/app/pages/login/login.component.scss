@@ -67,8 +67,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .info-section ul {
   padding-left: 20px;
@@ -87,6 +93,8 @@
   margin-bottom: 24px;
   /* ensure container matches the button/arrow height so children center correctly */
   min-height: 40px;
+  /* center the action buttons horizontally */
+  justify-content: center;
 }
 
 .scroll-arrow {
@@ -131,8 +139,21 @@
 
 .info-tabs-wrapper {
   order: 1;
-  overflow: hidden;
-  flex: 1;
+  /* allow horizontal scrolling; arrows will also programmatically scroll */
+  overflow-x: auto; /* enable scrolling when content overflows */
+  overflow-y: visible;
+  flex: 1 1 auto;
+  display: block; /* wrapper is a block that holds the nav */
+  padding-bottom: 6px;
+  touch-action: pan-y; /* allow vertical pan but not steal horizontal gestures */
+  -webkit-overflow-scrolling: touch;
+  /* visually hide native scrollbar but keep it usable (for accessibility) */
+  scrollbar-width: none; /* Firefox */
+}
+
+.info-tabs-wrapper::-webkit-scrollbar {
+  height: 0px;
+  width: 0px;
 }
 
 .info-tabs {
@@ -141,6 +162,7 @@
   min-width: max-content;
   transition: transform 0.3s ease;
   padding: 0;
+  white-space: nowrap;
 
   button {
     background: transparent;
@@ -165,7 +187,6 @@
     font-weight: 600;
   }
 }
-
 
 /* keep the login container above the background and use original margins */
 .login-container {
@@ -360,28 +381,58 @@
   display: flex;
   align-items: stretch;
   justify-content: center;
-  background: none; /* keep visible underlying background if needed */
-  padding: 40px; /* ensure inner content never reaches viewport edge */
+  background: none;
+  padding-top: 40px;
   box-sizing: border-box;
 }
 .info-box {
   width: 100%;
-  max-width: 560px;
+  max-width: 683px;
   height: 100%;
-  padding: 24px 32px; /* inner padding to keep text away from edges */
-  overflow: auto;
-  background: rgba(255,255,255,0.02); /* subtle translucent layer if desired */
-  color: rgba(30,40,50,0.9);
+  overflow: visible;
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(30, 40, 50, 0.9);
   box-sizing: border-box;
-  margin: 0 auto; /* center within padded panel */
 }
-.info-box h2 { margin-top: 0; font-size: 28px; color: rgba(30,40,50,0.95); }
-.info-box p { line-height: 1.6; color: rgba(30,40,50,0.8); }
+.pdf-image-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* allow internal scrolling for the image gallery but contain overscroll to avoid page scrolling */
+  overflow-y: auto;
+  max-height: calc(
+    78vh
+  ); /* increase gallery height so images occupy more vertical space */
+  overscroll-behavior: contain;
+  padding-right: 12px;
+  /* make the gallery grow to use most of the vertical space available */
+  flex: 1 1 auto;
 
-/* small visual nicety: custom scrollbar for modern browsers */
-.info-box::-webkit-scrollbar { width: 10px; }
-.info-box::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 6px; }
-.info-box:focus { outline: none; box-shadow: inset 0 0 0 2px rgba(143,194,230,0.06); }
+  img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(74vh);
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.info-box h2 {
+  margin-top: 0;
+  font-size: 28px;
+  color: rgba(30, 40, 50, 0.95);
+}
+.info-box p {
+  line-height: 1.6;
+  color: rgba(30, 40, 50, 0.8);
+}
+
+.info-box:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px rgba(143, 194, 230, 0.06);
+}
 .comfort-header {
   text-align: center;
   margin-bottom: 28px;
@@ -392,13 +443,13 @@
   h3 {
     font-size: 18px;
     margin-bottom: 8px;
-    color: rgba(30,40,50,0.95);
+    color: rgba(30, 40, 50, 0.95);
   }
 
   p {
     font-size: 14px;
     line-height: 1.6;
-    color: rgba(30,40,50,0.8);
+    color: rgba(30, 40, 50, 0.8);
     margin-bottom: 12px;
   }
 
@@ -410,7 +461,7 @@
     li {
       margin-bottom: 6px;
       font-size: 14px;
-      color: rgba(30,40,50,0.85);
+      color: rgba(30, 40, 50, 0.85);
     }
   }
 }
@@ -418,7 +469,7 @@
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 8px;
-  color: rgba(30,40,50,0.95);
+  color: rgba(30, 40, 50, 0.95);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -428,9 +479,8 @@
   font-weight: 500;
   line-height: 1.4;
   margin-bottom: 24px;
-  color: rgba(30,40,50,0.85);
+  color: rgba(30, 40, 50, 0.85);
 }
-
 
 .gentle-logo {
   position: relative;
@@ -514,7 +564,9 @@
   transition: padding 160ms ease, color 120ms ease;
   line-height: 1.2;
 }
-.soft-field input::placeholder { color: transparent; }
+.soft-field input::placeholder {
+  color: transparent;
+}
 .soft-field label {
   position: absolute;
   left: 16px;
@@ -642,7 +694,9 @@
   background: #c19a82;
   transition: width 0.25s ease;
 }
-.comfort-link:hover::after { width: 100%; }
+.comfort-link:hover::after {
+  width: 100%;
+}
 
 .comfort-button {
   width: 100%;
@@ -680,7 +734,7 @@
 }
 .comfort-button:hover .button-background {
   filter: brightness(1.02) saturate(1.05);
-  box-shadow: 0 10px 30px rgba(12,118,200,0.18);
+  box-shadow: 0 10px 30px rgba(12, 118, 200, 0.18);
 }
 .button-text {
   position: relative;
@@ -744,7 +798,12 @@
 .divider-line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(240, 206, 170, 0.36), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(240, 206, 170, 0.36),
+    transparent
+  );
 }
 .divider-text {
   color: rgba(139, 102, 85, 0.6);
@@ -950,16 +1009,30 @@
 }
 
 @media (max-width: 960px) {
-  .login-split { flex-direction: column; }
-  .right-panel { display: none; }
-  .right-panel .right-image { display: none; }
-  .left-panel { width: 100%; padding: 20px; }
+  .login-split {
+    flex-direction: column;
+  }
+  .right-panel {
+    display: none;
+  }
+  .right-panel .right-image {
+    display: none;
+  }
+  .left-panel {
+    width: 100%;
+    padding: 20px;
+  }
 }
 
 @media (min-width: 961px) {
   /* ensure left card doesn't hug the edge */
-  .left-panel { padding-left: 64px; padding-right: 40px; }
-  .soft-card { max-width: 420px; }
+  .left-panel {
+    padding-left: 64px;
+    padding-right: 40px;
+  }
+  .soft-card {
+    max-width: 420px;
+  }
   /* on desktop explicitly avoid internal scrolling in the login card so it doesn't show a scrollbar */
   .left-panel .soft-card {
     max-height: none; /* allow card to size naturally */
