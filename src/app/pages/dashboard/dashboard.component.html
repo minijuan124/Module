@@ -1,33 +1,17 @@
 <div class="dashboard">
-  <!-- Topbar: logo izquierdo y botones (visions) -->
   <div class="topbar">
     <img src="/assets/conexus-logo.png" alt="Conexus Logo" class="logo-left" />
 
-    <!-- Botones de visiones arriba a la derecha -->
     <div class="visions">
-     <button
-  *ngFor="let v of filteredVisions"
-  mat-raised-button
-  [color]="v.color"
-  (click)="openVision(v)"
->
-  {{ v.name }}
-</button>
- <!-- 👇 Botón de Logout -->
+      <button *ngFor="let v of filteredVisions" mat-raised-button [color]="v.color" (click)="openVision(v)">
+        {{ v.name }}
+      </button>
       <button mat-raised-button color="warn" (click)="logout()">
         <mat-icon>exit_to_app</mat-icon>
-        Logout
+        Salir
       </button>
     </div>
   </div>
-
-  <!-- <img src="/assets/sigic-logo.png" alt="SIGIC Logo" class="logo-right" /> -->
-
-  <!-- Marca de agua central -->
   <div class="watermark">
-    <!-- Texto removido: la imagen difuminada cumple la función de marca de agua -->
   </div>
-
-  <!-- Botones de visiones arriba a la derecha -->
-  <!-- (Removed duplicate visions block; buttons live in .topbar now) -->
 </div>

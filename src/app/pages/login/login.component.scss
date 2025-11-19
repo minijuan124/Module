@@ -33,7 +33,7 @@
   /* consolidated tab styles */
   display: inline-flex;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 0; /* removed extra bottom margin so tabs vertically center with arrows */
   min-width: max-content;
   transition: transform 0.3s ease;
   padding: 0;
@@ -66,6 +66,23 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
+/* Make info-box use flex column so tabs take only needed space and gallery fills rest */
+.info-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-tabs-container {
+  flex: 0 0 auto;
+}
+
+.tab-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* prevent double scrollbars; gallery will scroll */
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -90,31 +107,30 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
   /* ensure container matches the button/arrow height so children center correctly */
   min-height: 40px;
   /* center the action buttons horizontally */
   justify-content: center;
+  /* leave room at sides so arrows don't overlap the tabs */
+  padding: 8px 64px; /* top/bottom 8px, left/right 64px (enough for 40px arrow + spacing) */
 }
 
 .scroll-arrow {
-  position: relative;
+  position: absolute; /* position absolutely inside info-tabs-container */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 40px; // igual a la altura de los botones
+  height: 40px; /* igual a la altura de los botones */
   width: 40px;
   background: none;
   border: none;
   color: #1b2b3a;
   font-size: 24px;
   cursor: pointer;
-  z-index: 2;
-  margin: 0 4px;
-  /* place at 50% of container and nudge slightly down so arrows sit visually centered with buttons */
+  z-index: 3;
+  margin: 0;
   top: 50%;
-  transform: translateY(calc(-50% + 3px));
-  align-self: center;
+  transform: translateY(-50%); /* center vertically relative to container */
   padding: 0;
 
   &:hover {
@@ -122,11 +138,11 @@
   }
 
   &.left {
-    order: 0;
+    left: 8px; /* align arrows closer to the container edge so they line up with the tabs */
   }
 
   &.right {
-    order: 2;
+    right: 8px; /* align arrows closer to the container edge so they line up with the tabs */
   }
 
   mat-icon {
@@ -325,9 +341,10 @@
   /* default vertically center content but allow child-specific overrides */
   align-items: center;
   justify-content: center;
-  flex: 0 0 50vw;
-  max-width: 50vw;
-  width: 50vw;
+  /* make left/right take a portion of viewport; left narrower to favor images */
+  flex: 0 0 35vw;
+  max-width: 35vw;
+  width: 35vw;
   min-height: 100vh;
   gap: 0;
   box-sizing: border-box; /* include padding in the 50vw width to prevent overflow */
@@ -347,6 +364,10 @@
   overflow: hidden;
   align-items: stretch; /* let image fill vertically */
   justify-content: center;
+  /* make right panel wider to better display large images */
+  flex: 0 0 65vw;
+  max-width: 65vw;
+  width: 65vw;
 }
 
 /* allow the soft-card to have a comfortable fixed width and be centered */
@@ -382,12 +403,12 @@
   align-items: stretch;
   justify-content: center;
   background: none;
-  padding-top: 40px;
+  padding-top: 5px;
   box-sizing: border-box;
 }
 .info-box {
   width: 100%;
-  max-width: 683px;
+  max-width: none; /* allow info-box to expand to available space */
   height: 100%;
   overflow: visible;
   background: rgba(255, 255, 255, 0.02);
@@ -395,28 +416,33 @@
   box-sizing: border-box;
 }
 .pdf-image-gallery {
+  /* Treat each image as a full "slide" and snap vertically so only one is visible at a time */
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  /* allow internal scrolling for the image gallery but contain overscroll to avoid page scrolling */
+  gap: 0; /* no gap so slides are flush */
   overflow-y: auto;
-  max-height: calc(
-    78vh
-  ); /* increase gallery height so images occupy more vertical space */
   overscroll-behavior: contain;
-  padding-right: 12px;
-  /* make the gallery grow to use most of the vertical space available */
+  /* gallery fills remaining space inside .tab-content */
   flex: 1 1 auto;
+  height: 100%;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
 
+  /* ensure each image is treated as a slide that occupies full gallery height */
   img {
     width: 100%;
-    max-width: 100%;
-    height: auto;
-    max-height: calc(74vh);
-    margin: 0 auto;
+    display: block;
+    flex: 0 0 100%; /* take 100% of the gallery's height */
+    height: 100%;
+    object-fit: cover;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
+
+  /* optional: visually minimize native scrollbar but keep it usable */
+  scrollbar-width: thin;
 }
 
 .info-box h2 {
@@ -1027,8 +1053,8 @@
 @media (min-width: 961px) {
   /* ensure left card doesn't hug the edge */
   .left-panel {
-    padding-left: 64px;
-    padding-right: 40px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
   .soft-card {
     max-width: 420px;
