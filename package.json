@@ -5,9 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration production --base-href /Module/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:module": "node dist/module/server/server.mjs"
+    "serve:ssr:module": "node dist/module/server/server.mjs",
+    "deploy": "npm run build:prod && node ./scripts/setBaseHref.js && node ./scripts/copyIndex.js && npx angular-cli-ghpages -d dist"
   },
   "private": true,
   "dependencies": {
@@ -26,7 +28,8 @@
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.15.0"
+    "zone.js": "~0.15.0",
+    "angular-cli-ghpages": "2.0.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.18",

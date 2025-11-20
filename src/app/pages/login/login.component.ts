@@ -162,15 +162,15 @@ scrollTabs(direction: 'left' | 'right') {
     this.router.navigate(['/dashboard']);
   }
   allPages = [
-  { url: '../../../assets/bienvenida.png'},
-  { url: '../../../assets/que-es.png', section: 'que-es' },
-  { url: '../../../assets/gerencial1.png', section: 'gerencial' },
-  { url: '../../../assets/gerencial2.png', section: 'gerencial' },
-  { url: '../../../assets/operativa1.png', section: 'operativa' },
-  { url: '../../../assets/operativa2.png', section: 'operativa' },
-  { url: '../../../assets/finan1.png', section: 'financiera' },
-  { url: '../../../assets/alerta.png', section: 'alertas' },
-  { url: '../../../assets/reportead.png', section: 'adhoc' },
+  { url: 'assets/bienvenida.png'},
+  { url: 'assets/que-es.png', section: 'que-es' },
+  { url: 'assets/gerencial1.png', section: 'gerencial' },
+  { url: 'assets/gerencial2.png', section: 'gerencial' },
+  { url: 'assets/operativa1.png', section: 'operativa' },
+  { url: 'assets/operativa2.png', section: 'operativa' },
+  { url: 'assets/finan1.png', section: 'financiera' },
+  { url: 'assets/alerta.png', section: 'alertas' },
+  { url: 'assets/reportead.png', section: 'adhoc' },
   // etc.
 ];
 get filteredPages() {

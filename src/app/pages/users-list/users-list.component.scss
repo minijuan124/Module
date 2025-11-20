@@ -42,10 +42,10 @@
     z-index: 1;
 
     &::before {
-      content: "";
-      width: 440px;   /* valores en px */
-      height: 320px;
-      background-image: url(/assets/conexus-logo.png);
+    content: "";
+    width: 440px;   /* valores en px */
+    height: 320px;
+    background-image: url('../../../assets/conexus-logo.png');
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
