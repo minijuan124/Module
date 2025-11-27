@@ -80,7 +80,40 @@
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* prevent double scrollbars; gallery will scroll */
+  /* allow children to shrink correctly in a flex layout so the gallery can fill
+     the remaining space and scroll internally */
+  min-height: 0;
+}
+
+/* Make the info box fill the panel so the gallery can size to full height */
+.info-box {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Vertical scrolling gallery that snaps to each image so only one is visible
+   at a time. Each image will fill the gallery height and remain centered. */
+.pdf-image-gallery {
+  flex: 1 1 auto;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y mandatory;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-image-gallery img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  flex: 0 0 100%; /* each image takes full gallery height */
+  min-height: 100%;
+  object-fit: contain; /* keep aspect ratio, letterbox if needed */
+  margin: 0 auto;
+  scroll-snap-align: start;
 }
 
 @keyframes fadeIn {
