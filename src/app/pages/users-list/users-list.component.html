@@ -41,7 +41,7 @@
 
         <ng-container matColumnDef="banco">
           <th mat-header-cell *matHeaderCellDef>Banco</th>
-          <td mat-cell *matCellDef="let u">{{ u.banco }}</td>
+          <td mat-cell *matCellDef="let u">{{ translateBank(u.banco) }}</td>
         </ng-container>
 
         <ng-container matColumnDef="estatus">
@@ -61,7 +61,7 @@
 
         <ng-container matColumnDef="perfiles">
           <th mat-header-cell *matHeaderCellDef>Perfiles</th>
-          <td mat-cell *matCellDef="let u">{{ u.perfiles.join(", ") }}</td>
+          <td mat-cell *matCellDef="let u">{{ translateProfiles(u.perfiles) }}</td>
         </ng-container>
 
         <ng-container matColumnDef="acciones">

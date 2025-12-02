@@ -81,7 +81,7 @@
             </span>
             <span class="checkbox-text">Recuérdame</span>
           </label>
-          <a class="comfort-link" href="#">¿Olvidaste tu contraseña?</a>
+          <a class="comfort-link" href="#" (click)="openForgot($event)">¿Olvidaste tu contraseña?</a>
         </div>
 
         <button type="button" class="comfort-button" (click)="onSubmit()" [class.loading]="loading"
@@ -100,6 +100,8 @@
       <div class="auth-error" *ngIf="loginError">
         <p>{{ loginError }}</p>
       </div>
+
+      
 
       <!-- success overlay removed to avoid layout/animation on login -->
     </div>

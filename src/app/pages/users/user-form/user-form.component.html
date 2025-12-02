@@ -19,21 +19,21 @@
     <div class="user-form mat-elevation-z4">
       <h2>{{ isEdit ? 'Editar Usuario' : 'Nuevo Usuario' }}</h2>
 
-      <form [formGroup]="form" (ngSubmit)="save()">
+       <form [formGroup]="form" (ngSubmit)="save()">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Usuario</mat-label>
-          <input matInput formControlName="cod_usuario" [readonly]="isEdit" />
+          <mat-label>Código Usuario</mat-label>
+          <input matInput formControlName="cod_usuario" maxlength="20" [readonly]="isEdit" />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nombre</mat-label>
-          <input matInput formControlName="nomb_usuario" />
+          <mat-label>Nombre Usuario</mat-label>
+          <input matInput formControlName="nomb_usuario" maxlength="60" />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Banco</mat-label>
+          <mat-label>Empresa / Banco</mat-label>
           <mat-select formControlName="banco">
-            <mat-option *ngFor="let b of bancos" [value]="b.code">{{ b.name }}</mat-option>
+            <mat-option *ngFor="let b of bancos" [value]="b.codigoABA">{{ b.descripcion }}</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -47,17 +47,21 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Perfiles</mat-label>
-          <mat-select formControlName="perfiles" multiple>
-            <mat-option *ngFor="let p of perfiles" [value]="p.code">{{ p.name }}</mat-option>
+          <mat-label>Perfil asociado</mat-label>
+          <mat-select formControlName="codigoPerfilAsociado">
+            <mat-option *ngFor="let p of perfiles" [value]="p.codigoPerfil">{{ p.descripcion }}</mat-option>
           </mat-select>
         </mat-form-field>
 
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Clave (opcional)</mat-label>
+          <input matInput type="password" formControlName="clave" />
+        </mat-form-field>
+
         <div class="form-actions">
-          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-            Guardar
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isSaving">
+            {{ isSaving ? 'Guardando...' : 'Guardar' }}
           </button>
-         
         </div>
       </form>
     </div>

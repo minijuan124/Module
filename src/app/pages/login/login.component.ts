@@ -4,10 +4,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { ForgotPasswordDialogComponent } from './forgot-password-dialog.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -18,12 +20,16 @@ import { MatIcon } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIcon
+    MatIconModule,
+    MatDialogModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  // Forgot password admin contact (opened in Material dialog)
+  forgotEmail = 'ca02yfmejias@gmail.com';
+
   form: FormGroup;
   passwordVisible = false;
   loading = false;
@@ -35,7 +41,7 @@ export class LoginComponent {
 
 
 
-  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService, private dialog: MatDialog) {
     this.form = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(4)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -134,6 +140,15 @@ scrollTabs(direction: 'left' | 'right') {
   
   togglePassword() {
     this.passwordVisible = !this.passwordVisible;
+  }
+
+  openForgot(event?: Event) {
+    event?.preventDefault();
+    this.dialog.open(ForgotPasswordDialogComponent, {
+      width: '520px',
+      panelClass: 'forgot-dialog-panel',
+      data: { email: this.forgotEmail }
+    });
   }
   
   socialLogin(provider: string, event: Event) {
